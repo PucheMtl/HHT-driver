@@ -18,18 +18,18 @@ Main =
   // Definition of GH joint permettant une translation selon l'axe y
   Main.HumanModel.BodyModel.Right.ShoulderArm.Jnt = {
     AnyTransSphericalJoint GlenoHumeralJoint_HHT = 
-{
-  Axis = y;
-  //Ref = 0;
-  AnyRefNode &scapula_gh = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Scapula.gh;
-  AnyRefNode &humerus_gh = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Humerus.gh; 
-}; 
-};
+    {
+      Axis = y;
+      //Ref = 0;
+      AnyRefNode &scapula_gh = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Scapula.gh;
+      AnyRefNode &humerus_gh = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Humerus.gh; 
+    }; 
+  };
 
  AnyKinPLine HumeralHeadPosition = 
   {
-    AnyRefFrame &ref1 = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Scapula.gh;
-    AnyRefFrame &ref2 = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Humerus.gh;
+    AnyRefFrame &ref0 = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Scapula.gh;
+    AnyRefFrame &ref1 = Main.HumanModel.BodyModel.Right.ShoulderArm.Seg.Humerus.gh;
     //AnyRefFrame &<Insert name2> = <Insert object reference (or full object definition)>; You can make any number of these objects!
   };
 
@@ -42,17 +42,19 @@ Main =
   
 );
 
-  AnyKinEqSimpleDriver HumerusHeadDriver = 
+AnyKinEqSimpleDriver HumerusHeadDriver = 
 {
-  AnyKinPLine &Mesure = Main.HumeralHeadPosition ; // driver position tete humerale
-        DriverPos = {0.0};
-        DriverVel = {0.015};
-//        DriverAcc = {0.0};
-        Reaction.Type = {Off};
+  AnyTransSphericalJoint &gh = Main.HumanModel.BodyModel.Right.ShoulderArm.Jnt.GlenoHumeralJoint_HHT;
+  MeasureOrganizer = {0};
+  //  AnyKinPLine &Mesure = Main.HumeralHeadPosition ; // driver position tete humerale
+  DriverPos = {0.0};
+  DriverVel = {0.0015};
+  //        DriverAcc = {0.0};
+  Reaction.Type = {Off};
   
-      };
-          
-      };
+};
+
+};
 
 
   #include "BodyModelConfiguration.any"
